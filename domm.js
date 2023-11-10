@@ -14,11 +14,20 @@ document.addEventListener("DOMContentLoaded", function () {
   function addItem(e) {
     e.preventDefault();
 
-    var newItem = document.getElementById("item").value;
+    var newItemName = document.getElementById("item").value;
+    var newItemDescription = document.getElementById("description").value;
 
     var li = document.createElement("li");
     li.className = "list-group-item";
-    li.appendChild(document.createTextNode(newItem));
+
+    var itemName = document.createElement("div");
+    itemName.appendChild(document.createTextNode(newItemName));
+
+    var itemDescription = document.createElement("div");
+    itemDescription.appendChild(document.createTextNode(newItemDescription));
+
+    li.appendChild(itemName);
+    li.appendChild(itemDescription);
 
     var deleteBtn = document.createElement("button");
     deleteBtn.className = "btn btn-danger btn-sm float-right delete";
@@ -55,7 +64,13 @@ document.addEventListener("DOMContentLoaded", function () {
     var items = itemList.getElementsByTagName("li");
     Array.from(items).forEach(function (item) {
       var itemName = item.firstChild.textContent;
+      var itemDescription = item.textContent;
       if (itemName.toLowerCase().indexOf(text) !== -1) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+      }
+      if (itemDescription.toLowerCase().indexOf(text) !== -1) {
         item.style.display = "block";
       } else {
         item.style.display = "none";
