@@ -20,7 +20,7 @@ function displayUserDetails(userDetails) {
     const listItem = document.createElement("li");
     listItem.textContent = `${user.name}: ${user.email}`;
 
-    // Create a delete button for each list item
+    // Create Delete button for each list item
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
     deleteBtn.className = "delete-btn";
@@ -37,8 +37,30 @@ function displayUserDetails(userDetails) {
       displayUserDetails(userDetails);
     });
 
-    // Append the delete button to the list item
+    // Create Edit button for each list item
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.className = "edit-btn";
+
+    // Add a click event listener to edit the corresponding user detail
+    editBtn.addEventListener("click", function () {
+      // Set the user details to the input fields
+      document.getElementById("name").value = user.name;
+      document.getElementById("email").value = user.email;
+
+      // Remove the user detail from the list
+      userDetails.splice(index, 1);
+
+      // Update the local storage with the modified user details
+      serialize("userDetails", userDetails);
+
+      // Display the updated user details on the screen
+      displayUserDetails(userDetails);
+    });
+
+    // Append the Delete and Edit buttons to the list item
     listItem.appendChild(deleteBtn);
+    listItem.appendChild(editBtn);
 
     // Append the list item to the user list
     userList.appendChild(listItem);
