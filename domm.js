@@ -16,9 +16,31 @@ function displayUserDetails(userDetails) {
   userList.innerHTML = "";
 
   // Iterate over user details and add them to the screen
-  userDetails.forEach((user) => {
+  userDetails.forEach((user, index) => {
     const listItem = document.createElement("li");
     listItem.textContent = `${user.name}: ${user.email}`;
+
+    // Create a delete button for each list item
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.className = "delete-btn";
+
+    // Add a click event listener to delete the corresponding user detail
+    deleteBtn.addEventListener("click", function () {
+      // Remove the user detail from the list
+      userDetails.splice(index, 1);
+
+      // Update the local storage with the modified user details
+      serialize("userDetails", userDetails);
+
+      // Display the updated user details on the screen
+      displayUserDetails(userDetails);
+    });
+
+    // Append the delete button to the list item
+    listItem.appendChild(deleteBtn);
+
+    // Append the list item to the user list
     userList.appendChild(listItem);
   });
 }
